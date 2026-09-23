@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <listeners>
+    <listener class-name="listeners.TestListener"/>
+     <listener class-name="retry.RetryListener"/>
+</listeners>
+
+    <!-- Browser Parameter -->
+    <parameter name="browser" value="chrome"/>
+
+    <!-- Login Tests -->
+    <test name="Login Test">
+        <classes>
+            <class name="register.RegisterTest"/>
+        </classes>
+    </test>
+</suite> <!-- Suite -->
