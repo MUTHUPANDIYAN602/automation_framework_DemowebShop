@@ -13,6 +13,7 @@
     <test name="Login Test">
         <classes>
             <class name="register.RegisterTest"/>
+            
         </classes>
     </test>
 </suite> <!-- Suite -->

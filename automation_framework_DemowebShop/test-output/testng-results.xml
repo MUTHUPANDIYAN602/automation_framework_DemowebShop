@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+    <line>
+      <![CDATA[========== TEST SUITE STARTED ==========]]>
+    </line>
+    <line>
+      <![CDATA[Extent Report initialized]]>
+    </line>
+    <line>
+      <![CDATA[Application launched successfully]]>
+    </line>
+    <line>
+      <![CDATA[Login successful]]>
+    </line>
+    <line>
+      <![CDATA[Logout successful]]>
+    </line>
+    <line>
+      <![CDATA[Browser closed successfully]]>
+    </line>
+    <line>
+      <![CDATA[========== TEST SUITE EXECUTION COMPLETED ==========]]>
+    </line>
+  </reporter-output>
+  <suite started-at="2026-09-29T15:32:44 IST" name="Default suite" finished-at="2026-09-29T15:33:18 IST" duration-ms="34282">
+    <groups>
+    </groups>
+    <test started-at="2026-09-29T15:32:44 IST" name="Default test" finished-at="2026-09-29T15:33:18 IST" duration-ms="34282">
+      <class name="checkout.CheckoutTest">
+        <test-method is-config="true" signature="beforeSuite()[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:32:44 IST" name="beforeSuite" finished-at="2026-09-29T15:32:44 IST" duration-ms="349" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[========== TEST SUITE STARTED ==========]]>
+            </line>
+            <line>
+              <![CDATA[Extent Report initialized]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- beforeSuite -->
+        <test-method is-config="true" signature="openBrowser(java.lang.String)[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:32:44 IST" name="openBrowser" finished-at="2026-09-29T15:32:51 IST" duration-ms="6656" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chrome]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+            <line>
+              <![CDATA[Application launched successfully]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- openBrowser -->
+        <test-method is-config="true" signature="loginToApplication()[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:32:53 IST" name="loginToApplication" finished-at="2026-09-29T15:32:56 IST" duration-ms="2708" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[Login successful]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- loginToApplication -->
+        <test-method signature="verifyCheckout(java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:32:56 IST" name="verifyCheckout" data-provider="billaddress" finished-at="2026-09-29T15:33:11 IST" duration-ms="14965" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[chennai]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[14, kodambakkam]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[600029]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[2345678910]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- verifyCheckout -->
+        <test-method is-config="true" signature="logoutFromApplication()[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:33:11 IST" name="logoutFromApplication" finished-at="2026-09-29T15:33:18 IST" duration-ms="6777" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[Logout successful]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- logoutFromApplication -->
+        <test-method is-config="true" signature="closeBrowser()[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:33:18 IST" name="closeBrowser" finished-at="2026-09-29T15:33:18 IST" duration-ms="427" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[Browser closed successfully]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- closeBrowser -->
+        <test-method is-config="true" signature="afterSuite()[pri:0, instance:checkout.CheckoutTest@2362f559]" started-at="2026-09-29T15:33:18 IST" name="afterSuite" finished-at="2026-09-29T15:33:19 IST" duration-ms="364" status="PASS">
+          <reporter-output>
+            <line>
+              <![CDATA[========== TEST SUITE EXECUTION COMPLETED ==========]]>
+            </line>
+          </reporter-output>
+        </test-method> <!-- afterSuite -->
+      </class> <!-- checkout.CheckoutTest -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>

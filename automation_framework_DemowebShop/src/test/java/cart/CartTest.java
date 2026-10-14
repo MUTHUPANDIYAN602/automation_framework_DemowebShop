@@ -1,30 +1,68 @@
-	package cart;
+package cart;
 
-	import org.testng.annotations.Test;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+import base.LoginBaseTest;
+import pages.CartPage;
+import pages.HomePage;
+import pages.ProductPage;
 
-	import base.BaseTest;
-	import pages.CartPage;
-	import pages.ProductPage;
-	import pages.SearchPage;
+	public class CartTest extends LoginBaseTest{
 
-	public class CartTest extends BaseTest {
-
-	    @Test
+	    @Test(priority = 1)
 	    public void addProductToCart() {
 
-	        SearchPage searchPage = new SearchPage(driver);
 	        ProductPage productPage = new ProductPage(driver);
 	        CartPage cartPage = new CartPage(driver);
-
-	        searchPage.searchProduct("Build your own cheap computer");
-
-	        driver.findElement(org.openqa.selenium.By.linkText("Build your own cheap computer")).click();
-
+	        HomePage homepage = new HomePage(driver);
+	        
+	        homepage.clickComputers();
+	        
+	        homepage.clickNotebooks();
+	       
 	        productPage.clickAddToCart();
 
 	        cartPage.openShoppingCart();
-
-	        cartPage.proceedToCheckout();
+	        
 	    }
-	}
+	
+	
+	@Test(priority = 2)
+    public void removeProductfromCart() {
+
+        ProductPage productPage = new ProductPage(driver);
+        CartPage cartPage = new CartPage(driver);
+        HomePage homepage = new HomePage(driver);
+        
+        cartPage.openShoppingCart();
+        
+        cartPage.removeProduct();
+        
+        cartPage.clickupdateCart();
+    }
+	
+	 @Test(priority = 3)
+	    public void proceedToCheckout() {
+
+	        ProductPage productPage = new ProductPage(driver);
+	        CartPage cartPage = new CartPage(driver);
+	        HomePage homepage = new HomePage(driver);
+	        
+	        homepage.clickComputers();
+	        
+	        homepage.clickNotebooks();
+	       
+	        productPage.clickAddToCart();
+
+	        cartPage.openShoppingCart();
+	        
+	        cartPage.ClickCountry();
+	        
+	        cartPage.selectcountry();
+	        
+	        cartPage.proceedToCheckout();
+	        Assert.assertEquals(false, null);
+	    }
+}
+
 

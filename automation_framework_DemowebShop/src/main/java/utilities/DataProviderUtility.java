@@ -52,5 +52,9 @@ public class DataProviderUtility {
         return ExcelUtility.getMultipleDataFromExcel("wrongmail");
     }
     
-    
+    @DataProvider(name = "billaddress")
+    public static Object[][] billaddress() {
+
+        return ExcelUtility.getMultipleDataFromExcel("billaddress");
+    }
 }

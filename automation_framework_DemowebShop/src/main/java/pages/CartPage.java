@@ -3,6 +3,7 @@ package pages;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 
 
 public class CartPage extends BasePage {
@@ -30,9 +31,24 @@ public class CartPage extends BasePage {
 
     @FindBy(name = "CountryId")
     private WebElement countryDropdown;
-
+    
+    @FindBy(xpath = "//div[@class='center-1']")
+    private WebElement centerfield;
+    
+    
     // Business Methods
 
+    public void ClickCountry() {
+       countryDropdown.click();
+    }
+    
+    public void selectcountry() {
+    	Select select = new Select(countryDropdown);
+    	
+    	select.selectByIndex(19);
+    	
+    }
+    
     public void openShoppingCart() {
         shoppingCartLink.click();
     }
@@ -51,9 +67,17 @@ public class CartPage extends BasePage {
     public void clickCheckout() {
         checkoutButton.click();
     }
+    
+    public void clickupdateCart() {
+        updateCartButton.click();
+    }
 
     public void proceedToCheckout() {
         acceptTermsOfService();
         clickCheckout();
+    }
+    
+    public void gettext() {
+    	centerfield.getText();
     }
 }

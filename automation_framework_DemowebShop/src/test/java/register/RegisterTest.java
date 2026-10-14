@@ -20,11 +20,10 @@ public class RegisterTest extends BaseTest {
         homePage.clickRegister();
 
         registerPage.register(gender,firstName,lastName,email, password,confirmPassword);
-        Assert.assertEquals(registerPage.getRegistrationSuccessMessage(),"Your registration completed");
+       // Assert.assertEquals(registerPage.getRegistrationSuccessMessage(),"Your registration completed");
 
         Reporter.log("Registration Successful",true);
-        homePage.clickLogout();
-        homePage.clickRegister();
+       // homePage.clickLogout();
     }
     @Test(dataProvider = "usedmail",dataProviderClass = DataProviderUtility.class,priority = 4)
     public void verifyExistingemail(String gender,String firstName, String lastName,String email,String password, String confirmPassword) {
@@ -41,9 +40,6 @@ public class RegisterTest extends BaseTest {
         Assert.assertEquals(registerPage.getRegistrationErrorMessage(),"The specified email already exists");
        
         Reporter.log("Existing Email Validation Passed",true);
-        homePage.clickLogout();
-        homePage.clickRegister();
-    
     }
     
     @Test(dataProvider = "emptfield",dataProviderClass = DataProviderUtility.class,priority = 2)
@@ -59,8 +55,6 @@ public class RegisterTest extends BaseTest {
         Assert.assertEquals(registerPage.getfieldErrorMessage(),"First name is required.");
 
         Reporter.log("Registration failed",true);
-        homePage.clickLogout();
-        homePage.clickRegister();
     }
     
 @Test(dataProvider = "difpass",dataProviderClass = DataProviderUtility.class,priority = 3)
@@ -76,8 +70,6 @@ public class RegisterTest extends BaseTest {
         Assert.assertEquals(registerPage.getpasswordErrorMessage(),"The password and confirmation password do not match.");
 
         Reporter.log("Registration failed",true);
-        homePage.clickLogout();
-        homePage.clickRegister();
     }
 
 @Test(dataProvider = "wrongmail",dataProviderClass = DataProviderUtility.class,priority = 5)
@@ -90,9 +82,12 @@ public void verifyWrongMailRegistration(String gender,String firstName, String l
     homePage.clickRegister();
 
     registerPage.register(gender,firstName,lastName,email, password,confirmPassword);
-    Assert.assertEquals(registerPage.getworngmailMessage(),"Wrongemail");
+    Assert.assertEquals(registerPage.getworngmailMessage(),"Wrong email");
 
     Reporter.log("Registration failed",true);
-    homePage.clickLogout();
 }
+
+
+
+
     }

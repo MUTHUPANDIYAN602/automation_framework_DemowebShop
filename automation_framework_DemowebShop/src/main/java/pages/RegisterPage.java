@@ -36,7 +36,7 @@ public class RegisterPage extends BasePage{
     @FindBy(id = "register-button")
     private WebElement registerButton;
 
-    @FindBy(className = "result")
+    @FindBy(xpath = "//div[@class='result']")
     private WebElement registrationSuccessMessage;
     
     @FindBy(css = ".message-error")
@@ -76,7 +76,7 @@ public class RegisterPage extends BasePage{
         emailTextField.sendKeys(email);
     }
 
-    public void enterPassword(String password) {
+    public void   enterPassword(String password) {
         passwordTextField.clear();
         passwordTextField.sendKeys(password);
     }

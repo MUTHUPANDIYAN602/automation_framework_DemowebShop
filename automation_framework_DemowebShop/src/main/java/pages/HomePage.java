@@ -23,6 +23,20 @@ public class HomePage extends BasePage{
 	    @FindBy(partialLinkText = "Shopping")
 	    private WebElement shoppinglink;
 	    
+	    @FindBy(linkText = "Notebooks")
+	    private WebElement Notebookslink;
+	    
+	    @FindBy(linkText = "Computers")
+	    private WebElement Computerslink;
+	    
+	    public void clickComputers() {
+	    	Computerslink.click();
+	    }
+	    
+	    public void clickNotebooks() {
+	        Notebookslink.click();
+	    }
+
 	    
 	    public void clickRegister() {
 	        registerLink.click();

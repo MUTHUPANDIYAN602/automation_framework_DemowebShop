@@ -16,56 +16,94 @@ import utilities.ScreenshotUtility;
 
 public class TestListener implements ITestListener {
 
-    // Extent Report object
-    private static final ExtentReports extent = ExtentReportUtility.getReportObject();
+    // =========================================================
+    // EXTENT REPORT OBJECT
+    // =========================================================
+
+    private static final ExtentReports extent =
+            ExtentReportUtility.getReportObject();
 
     // Stores one parent ExtentTest for each test method
-    private static final ConcurrentHashMap<String, ExtentTest> testMap = new ConcurrentHashMap<>();
+    private static final ConcurrentHashMap<String, ExtentTest> testMap =
+            new ConcurrentHashMap<>();
 
-    // Stores current attempt node
-    private static final ConcurrentHashMap<String, ExtentTest> attemptMap = new ConcurrentHashMap<>();
+    // Stores the current attempt node
+    private static final ConcurrentHashMap<String, ExtentTest> attemptMap =
+            new ConcurrentHashMap<>();
 
-    // CREATE UNIQUE KEY FOR EACH TEST
+
+    // =========================================================
+    // CREATE UNIQUE TEST KEY
+    // =========================================================
 
     private String getTestKey(ITestResult result) {
 
-        return result.getTestClass().getName() + "."+ result.getMethod().getMethodName();
+        return result.getTestClass().getName()
+                + "."
+                + result.getMethod().getMethodName();
     }
-    
+
+
+    // =========================================================
     // SUITE START
+    // =========================================================
 
     @Override
     public void onStart(ITestContext context) {
 
-        System.out.println( "========== TESTNG EXECUTION STARTED ==========");
+        System.out.println(
+                "========== TESTNG EXECUTION STARTED =========="
+        );
     }
 
+
+    // =========================================================
     // TEST START
+    // =========================================================
 
     @Override
     public void onTestStart(ITestResult result) {
 
         String key = getTestKey(result);
 
-        testMap.computeIfAbsent(key, k ->
-                extent.createTest(result.getTestClass().getName() + " - " + result.getMethod().getMethodName()));
+        // Create parent test only once
+        testMap.computeIfAbsent(
+                key,
+                k -> extent.createTest(
+                        result.getTestClass().getName()
+                                + " - "
+                                + result.getMethod().getMethodName()
+                )
+        );
 
         ExtentTest parentTest = testMap.get(key);
 
+        // Get current attempt number
         int attemptNumber = getAttemptNumber(result);
 
-        ExtentTest attemptTest = parentTest.createNode("Attempt " + attemptNumber);
+        // Create attempt node
+        ExtentTest attemptTest =
+                parentTest.createNode(
+                        "Attempt " + attemptNumber
+                );
 
         attemptTest.info("Test execution started");
 
         attemptMap.put(key, attemptTest);
 
-
-        System.out.println( "TEST STARTED : " + result.getMethod().getMethodName()+ " | Attempt : "+ attemptNumber );
+        System.out.println(
+                "TEST STARTED : "
+                        + result.getMethod().getMethodName()
+                        + " | Attempt : "
+                        + attemptNumber
+        );
     }
 
+
+    // =========================================================
     // TEST SUCCESS
- 
+    // =========================================================
+
     @Override
     public void onTestSuccess(ITestResult result) {
 
@@ -75,14 +113,23 @@ public class TestListener implements ITestListener {
 
         if (attemptTest != null) {
 
-            attemptTest.pass("Test Passed Successfully");
+            attemptTest.pass(
+                    "Test Passed Successfully"
+            );
         }
-        System.out.println("TEST PASSED : "+ result.getMethod().getMethodName() );
+
+        System.out.println(
+                "TEST PASSED : "
+                        + result.getMethod().getMethodName()
+        );
 
         attemptMap.remove(key);
     }
 
+
+    // =========================================================
     // TEST FAILURE
+    // =========================================================
 
     @Override
     public void onTestFailure(ITestResult result) {
@@ -94,7 +141,7 @@ public class TestListener implements ITestListener {
         if (attemptTest == null) {
             return;
         }
-        
+
         // Mark attempt as failed
         attemptTest.fail("Test Failed");
 
@@ -102,88 +149,131 @@ public class TestListener implements ITestListener {
         // Attach exception
         if (result.getThrowable() != null) {
 
-            attemptTest.fail(result.getThrowable() );
+            attemptTest.fail(
+                    result.getThrowable()
+            );
         }
 
-        // CHECK FINAL RETRY
+
+        // =====================================================
+        // CHECK RETRY STATUS
+        // =====================================================
 
         RetryAnalyzer retryAnalyzer = null;
 
         try {
 
-            retryAnalyzer =(RetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
+            retryAnalyzer =
+                    (RetryAnalyzer)
+                    result.getMethod()
+                            .getRetryAnalyzer(result);
 
         } catch (Exception e) {
 
-            System.out.println("Unable to get RetryAnalyzer : "+ e.getMessage());
+            System.out.println(
+                    "Unable to get RetryAnalyzer : "
+                            + e.getMessage()
+            );
         }
 
-        boolean finalAttempt =retryAnalyzer == null|| retryAnalyzer.isFinalAttempt();
 
+        boolean finalAttempt =
+                retryAnalyzer == null
+                        || retryAnalyzer.isFinalAttempt();
+
+
+        // =====================================================
         // SCREENSHOT ONLY ON FINAL FAILED ATTEMPT
+        // =====================================================
 
         if (finalAttempt) {
 
             try {
 
-                Object testInstance = result.getInstance();
-
+                Object testInstance =
+                        result.getInstance();
 
                 if (testInstance instanceof BaseTest) {
 
-                    BaseTest baseTest = (BaseTest) testInstance;
-
+                    BaseTest baseTest =
+                            (BaseTest) testInstance;
 
                     if (baseTest.getDriver() != null) {
 
-                        String screenshotPath = ScreenshotUtility.captureScreenshot(baseTest.getDriver(), result.getMethod().getMethodName());
+                        String screenshotPath =
+                                ScreenshotUtility.captureScreenshot(
+                                        baseTest.getDriver(),
+                                        result.getMethod()
+                                                .getMethodName()
+                                );
 
                         if (screenshotPath != null) {
 
-                            attemptTest.addScreenCaptureFromPath(screenshotPath);
+                            attemptTest.addScreenCaptureFromPath(
+                                    screenshotPath
+                            );
                         }
                     }
                 }
 
             } catch (Exception e) {
 
-                attemptTest.warning("Unable to capture screenshot : " + e.getMessage());
+                attemptTest.warning(
+                        "Unable to capture screenshot : "
+                                + e.getMessage()
+                );
             }
 
+            // Remove attempt after final failure
             attemptMap.remove(key);
         }
 
 
-        System.out.println("TEST FAILED : "+ result.getMethod().getMethodName() );
+        System.out.println(
+                "TEST FAILED : "
+                        + result.getMethod().getMethodName()
+        );
     }
 
+
+    // =========================================================
     // TEST SKIPPED
-   
+    // =========================================================
+
     @Override
     public void onTestSkipped(ITestResult result) {
 
         String key = getTestKey(result);
 
-        ExtentTest attemptTest = attemptMap.get(key);
-
+        ExtentTest attemptTest =
+                attemptMap.get(key);
 
         if (attemptTest != null) {
 
-            attemptTest.skip("Test Skipped" );
-
+            attemptTest.skip(
+                    "Test Skipped"
+            );
 
             if (result.getThrowable() != null) {
 
-                attemptTest.skip(result.getThrowable());
+                attemptTest.skip(
+                        result.getThrowable()
+                );
             }
         }
 
-
-        System.out.println("TEST SKIPPED : "+ result.getMethod().getMethodName() );
+        System.out.println(
+                "TEST SKIPPED : "
+                        + result.getMethod().getMethodName()
+        );
 
         attemptMap.remove(key);
     }
+
+
+    // =========================================================
     // GET ATTEMPT NUMBER
+    // =========================================================
 
     private int getAttemptNumber(ITestResult result) {
 
@@ -191,7 +281,10 @@ public class TestListener implements ITestListener {
 
         try {
 
-            retryAnalyzer =(RetryAnalyzer) result.getMethod().getRetryAnalyzer(result);
+            retryAnalyzer =
+                    (RetryAnalyzer)
+                    result.getMethod()
+                            .getRetryAnalyzer(result);
 
         } catch (Exception e) {
 
@@ -204,14 +297,20 @@ public class TestListener implements ITestListener {
             return 1;
         }
 
+
         return retryAnalyzer.getRetryCount() + 1;
     }
 
+
+    // =========================================================
     // SUITE FINISH
+    // =========================================================
 
     @Override
     public void onFinish(ITestContext context) {
 
-        System.out.println("========== TESTNG EXECUTION COMPLETED ==========" );
+        System.out.println(
+                "========== TESTNG EXECUTION COMPLETED =========="
+        );
     }
 }
